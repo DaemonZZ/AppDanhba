@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -71,7 +72,14 @@ public class ContactFragment extends Fragment {
             String photoUri = cur.getString(photoIndex);
             String name = cur.getString(nameIndex);
             String num = cur.getString(numIndex);
-            Bitmap photo = getPhoto(photoUri);
+            Bitmap photo;
+
+            if(photoUri!=null){
+                 photo= getPhoto(photoUri);
+            }
+            else {
+                photo= BitmapFactory.decodeResource(context.getResources(), R.drawable.yasuo);
+            }
 
             list.add(new Contact(photo,name,num));
         } while (cur.moveToNext());
