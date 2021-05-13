@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+//Adapter for RecyclerView
+
 public class ContactAdapter extends RecyclerView.Adapter {
     private List<Contact> list;
     private Context context;

@@ -1,5 +1,6 @@
 package com.contact;
 
+//CallLogs Model
 public class Call_Log {
     private String number;
     private String duration;

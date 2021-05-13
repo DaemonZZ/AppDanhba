@@ -26,11 +26,9 @@ public class ContactFragment extends Fragment {
     ArrayList<Contact> list = new ArrayList<>();
     RecyclerView rv;
     ContactAdapter adapter;
-    private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     public ContactFragment() {
     }
 
-    // TODO: Rename and change types and number of parameters
     public static ContactFragment newInstance(String param1, String param2) {
         ContactFragment fragment = new ContactFragment();
 
@@ -49,7 +47,6 @@ public class ContactFragment extends Fragment {
         View view =inflater.inflate(R.layout.fragment_contact,container,false);
         context = this.getContext();
         rv = view.findViewById(R.id.contact_rv);
-
         readContact();
         return view;
     }
@@ -78,7 +75,7 @@ public class ContactFragment extends Fragment {
                  photo= getPhoto(photoUri);
             }
             else {
-                photo= BitmapFactory.decodeResource(context.getResources(), R.drawable.yasuo);
+                photo= BitmapFactory.decodeResource(context.getResources(), R.drawable.yasuo); //Hình mặc định
             }
 
             list.add(new Contact(photo,name,num));
@@ -86,7 +83,6 @@ public class ContactFragment extends Fragment {
         cur.close();
 
         adapter = new ContactAdapter(list,context);
-
         LinearLayoutManager lm = new LinearLayoutManager(context);
         rv.setAdapter(adapter);
         rv.setLayoutManager(lm);

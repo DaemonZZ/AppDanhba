@@ -2,6 +2,7 @@ package com.contact;
 
 import android.graphics.Bitmap;
 
+
 public class Contact {
     Bitmap photo;
     String name;
