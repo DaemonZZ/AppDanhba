@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class ContactFragment extends Fragment {
     Context context;
-    ArrayList<Contact> list = new ArrayList<>();
+
     RecyclerView rv;
     ContactAdapter adapter;
     public ContactFragment() {
@@ -47,11 +47,20 @@ public class ContactFragment extends Fragment {
         View view =inflater.inflate(R.layout.fragment_contact,container,false);
         context = this.getContext();
         rv = view.findViewById(R.id.contact_rv);
-        readContact();
+
+        //get data
+        ArrayList<Contact> list = readContact();
+
+        adapter = new ContactAdapter(list,context);
+        LinearLayoutManager lm = new LinearLayoutManager(context);
+        rv.setAdapter(adapter);
+        rv.setLayoutManager(lm);
+
         return view;
     }
 
-    public void readContact(){
+    public ArrayList<Contact> readContact(){
+        ArrayList<Contact> list = new ArrayList<>();
         String[] pr = {
                 ContactsContract.CommonDataKinds.Phone.PHOTO_URI,
                 ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
@@ -82,10 +91,7 @@ public class ContactFragment extends Fragment {
         } while (cur.moveToNext());
         cur.close();
 
-        adapter = new ContactAdapter(list,context);
-        LinearLayoutManager lm = new LinearLayoutManager(context);
-        rv.setAdapter(adapter);
-        rv.setLayoutManager(lm);
+        return list;
     }
 
     private Bitmap getPhoto(String photoUri) {

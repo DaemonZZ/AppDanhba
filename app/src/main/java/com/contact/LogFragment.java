@@ -20,7 +20,7 @@ import java.util.Date;
 
 public class LogFragment extends Fragment {
     Context context;
-    ArrayList<Call_Log> list = new ArrayList<>();
+
     RecyclerView rv;
     LogAdapter adapter;
 
@@ -42,12 +42,21 @@ public class LogFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_log, container, false);
-        context = this.getContext();
+        context = this.getContext(); //context?
         rv = view.findViewById(R.id.log_rv);
-        getCallDetails();
+
+        //get data
+        ArrayList<Call_Log> list = getCallDetails();
+
+        adapter = new LogAdapter(list,context);
+        rv.setAdapter(adapter);
+        LinearLayoutManager lm = new LinearLayoutManager(context);
+        rv.setLayoutManager(lm);
+
         return view;
     }
-    private  void getCallDetails() {
+    private  ArrayList<Call_Log> getCallDetails() {
+        ArrayList<Call_Log> list = new ArrayList<>();
         Cursor cursor = context.getContentResolver().query(CallLog.Calls.CONTENT_URI,
                 null, null, null, CallLog.Calls.DATE + " DESC");
         int num = cursor.getColumnIndex(CallLog.Calls.NUMBER);
@@ -55,12 +64,13 @@ public class LogFragment extends Fragment {
         int duration = cursor.getColumnIndex(CallLog.Calls.DURATION);
         while (cursor.moveToNext()) {
             String phNumber = cursor.getString(num);
-            String callDate = cursor.getString(date);
-            Date callDayTime = new Date(Long.valueOf(callDate));
-            DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss dd/mm/yyyy");
-            String time = dateFormat.format(callDayTime);
 
-            String callDuration = cursor.getString(duration);
+            String callDate = cursor.getString(date); // tra ve kieu long
+            Date callDayTime = new Date(Long.valueOf(callDate)); //convert
+            DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss dd/mm/yyyy"); //format
+            String time = dateFormat.format(callDayTime); //toString
+
+            String callDuration = cursor.getString(duration); // giay
             int dur = Integer.parseInt(callDuration);
             int min = dur / 60;
             int sec = dur % 60;
@@ -69,9 +79,7 @@ public class LogFragment extends Fragment {
 
         }
         cursor.close();
-        adapter = new LogAdapter(list,context);
-        rv.setAdapter(adapter);
-        LinearLayoutManager lm = new LinearLayoutManager(context);
-        rv.setLayoutManager(lm);
+        return list;
+
     }
 }
