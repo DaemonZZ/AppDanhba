@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 // Permission is granted
                 createView();
             } else {
-                Toast.makeText(context, "Until you grant the permission, we canot display the names", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Không có quyền truy cập", Toast.LENGTH_SHORT).show();
             }
         }
     }
