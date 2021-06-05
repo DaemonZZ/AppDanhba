@@ -86,8 +86,11 @@ public class ContactFragment extends Fragment {
             else {
                 photo= BitmapFactory.decodeResource(context.getResources(), R.drawable.yasuo); //Hình mặc định
             }
-
-            list.add(new Contact(photo,name,num));
+            Contact c = new Contact();
+            c.setPhoto(photo);//resize photo +>
+            c.setName(name);
+            c.setNumber(num);
+            list.add(c);
         } while (cur.moveToNext());
         cur.close();
 

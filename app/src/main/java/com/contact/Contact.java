@@ -1,12 +1,21 @@
 package com.contact;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.contact.bitmap.BitmapScaleDown;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
 
 
-public class Contact {
-    Bitmap photo;
-    String name;
-    String number;
+public class Contact implements Parcelable {
+    private Bitmap photo;
+    private String name;
+    private String number;
 
     public Contact() {
     }
@@ -17,12 +26,37 @@ public class Contact {
         this.number = number;
     }
 
+    protected Contact(Parcel in) {
+        photo = in.readParcelable(Bitmap.class.getClassLoader());
+        name = in.readString();
+        number = in.readString();
+    }
+
+    public static final Creator<Contact> CREATOR = new Creator<Contact>() {
+        @Override
+        public Contact createFromParcel(Parcel in) {
+            return new Contact(in);
+        }
+
+        @Override
+        public Contact[] newArray(int size) {
+            return new Contact[size];
+        }
+    };
+
     public Bitmap getPhoto() {
         return photo;
     }
 
     public void setPhoto(Bitmap photo) {
-        this.photo = photo;
+        Bitmap inp ;
+        if(photo.getByteCount()>1000000){
+            inp = Bitmap.createScaledBitmap(photo,photo.getWidth()/10,photo.getHeight()/10,false);
+        }
+        else {
+            inp=photo;
+        }
+        this.photo = inp;
     }
 
     public String getName() {
@@ -39,5 +73,17 @@ public class Contact {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(photo, flags);
+        dest.writeString(name);
+        dest.writeString(number);
     }
 }

@@ -67,7 +67,7 @@ public class LogFragment extends Fragment {
 
             String callDate = cursor.getString(date); // tra ve kieu long
             Date callDayTime = new Date(Long.valueOf(callDate)); //convert
-            DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss dd/mm/yyyy"); //format
+            DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss dd/MMM/yyyy"); //format
             String time = dateFormat.format(callDayTime); //toString
 
             String callDuration = cursor.getString(duration); // giay

@@ -1,6 +1,8 @@
 package com.contact;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import java.util.List;
 public class LogAdapter extends RecyclerView.Adapter {
     private List<Call_Log> list;
     private Context context;
+
 
     public LogAdapter(List<Call_Log> list, Context context) {
         this.list = list;
@@ -38,7 +41,14 @@ public class LogAdapter extends RecyclerView.Adapter {
         ((ViewHolder)holder).txtNum.setText(log.getNumber());
         ((ViewHolder)holder).txtDur.setText(log.getDuration());
         ((ViewHolder)holder).txtTime.setText(log.getTime());
-
+        ((ViewHolder)holder).setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onClick(View view, int index) {
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:"+list.get(index).getNumber()));
+                context.startActivity(callIntent);
+            }
+        });
 
     }
 
@@ -48,8 +58,13 @@ public class LogAdapter extends RecyclerView.Adapter {
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView txtNum,txtDur,txtTime;
+        private ItemClickListener itemClickListener;
+
+        public void setItemClickListener(ItemClickListener itemClickListener) {
+            this.itemClickListener = itemClickListener;
+        }
 
 
         public ViewHolder(View itemView) {
@@ -58,6 +73,12 @@ public class LogAdapter extends RecyclerView.Adapter {
             txtNum = itemView.findViewById(R.id.txtNumber);
             txtDur = itemView.findViewById(R.id.txtDuration);
             txtTime = itemView.findViewById(R.id.txtTime);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            itemClickListener.onClick(v,getAdapterPosition());
         }
     }
 }
