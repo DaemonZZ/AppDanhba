@@ -5,14 +5,16 @@ public class Call_Log {
     private String number;
     private String duration;
     private String time;
+    private int type;
 
     public Call_Log() {
     }
 
-    public Call_Log(String number, String duration, String time) {
+    public Call_Log(String number, String duration, String time,int type) {
         this.number = number;
         this.duration = duration;
         this.time = time;
+        this.type=type;
     }
 
     public String getNumber() {
@@ -37,5 +39,13 @@ public class Call_Log {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

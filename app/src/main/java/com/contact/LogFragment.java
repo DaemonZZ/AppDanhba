@@ -75,7 +75,7 @@ public class LogFragment extends Fragment {
             int min = dur / 60;
             int sec = dur % 60;
 
-            list.add(new Call_Log(phNumber,"["+min+":"+sec+"]",time));
+            list.add(new Call_Log(phNumber,"["+min+":"+sec+"]",time,1));
 
         }
         cursor.close();

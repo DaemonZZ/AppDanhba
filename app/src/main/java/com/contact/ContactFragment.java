@@ -69,29 +69,32 @@ public class ContactFragment extends Fragment {
         ContentResolver resolver =this.getContext().getContentResolver();
         Cursor cur = resolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,pr,null,null,null);
 
-        int photoIndex = cur.getColumnIndex(pr[0]);
-        int nameIndex = cur.getColumnIndex(pr[1]);
-        int numIndex = cur.getColumnIndex(pr[2]);
+        if(cur.getCount()>0){
+            int photoIndex = cur.getColumnIndex(pr[0]);
+            int nameIndex = cur.getColumnIndex(pr[1]);
+            int numIndex = cur.getColumnIndex(pr[2]);
 
-        cur.moveToFirst();
-        do{
-            String photoUri = cur.getString(photoIndex);
-            String name = cur.getString(nameIndex);
-            String num = cur.getString(numIndex);
-            Bitmap photo;
+            cur.moveToFirst();
+            do{
+                String photoUri = cur.getString(photoIndex);
+                String name = cur.getString(nameIndex);
+                String num = cur.getString(numIndex);
+                Bitmap photo;
 
-            if(photoUri!=null){
-                 photo= getPhoto(photoUri);
-            }
-            else {
-                photo= BitmapFactory.decodeResource(context.getResources(), R.drawable.yasuo); //Hình mặc định
-            }
-            Contact c = new Contact();
-            c.setPhoto(photo);//resize photo +>
-            c.setName(name);
-            c.setNumber(num);
-            list.add(c);
-        } while (cur.moveToNext());
+                if(photoUri!=null){
+                    photo= getPhoto(photoUri);
+                }
+                else {
+                    photo= BitmapFactory.decodeResource(context.getResources(), R.drawable.yasuo); //Hình mặc định
+                }
+                Contact c = new Contact();
+                c.setPhoto(photo);//resize photo +>
+                c.setName(name);
+                c.setNumber(num);
+                list.add(c);
+            } while (cur.moveToNext());
+
+        }
         cur.close();
 
         return list;
@@ -104,7 +107,6 @@ public class ContactFragment extends Fragment {
                 return bm;
             } catch (IOException e) {
                 e.printStackTrace();
-
             }
         }
         return null;

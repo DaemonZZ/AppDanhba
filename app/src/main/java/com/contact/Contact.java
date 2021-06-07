@@ -1,15 +1,10 @@
 package com.contact;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.contact.bitmap.BitmapScaleDown;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.Serializable;
 
 
 public class Contact implements Parcelable {
