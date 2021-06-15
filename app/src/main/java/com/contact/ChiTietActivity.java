@@ -52,7 +52,9 @@ public class ChiTietActivity extends AppCompatActivity {
         btnMes.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent mesIntent = new Intent(Intent.ACTION_SENDTO);
+                mesIntent.setData(Uri.parse("smsto:"+c.getNumber()));
+                context.startActivity(mesIntent);
             }
         }));
 
